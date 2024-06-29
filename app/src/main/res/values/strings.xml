@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="mapa">Mapa</string>
+    <string name="Mapa" />
+    <string name="Linhas" />
+    <string name="ônibus" />
+</resources>

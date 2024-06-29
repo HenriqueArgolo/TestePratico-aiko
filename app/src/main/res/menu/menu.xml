@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/busStop"
+        android:icon="@drawable/bus"
+        android:title="Paradas" />
+    <item
+        android:id="@+id/lines"
+        android:icon="@drawable/roadmap_8210654"
+        android:title="Linhas" />
+    <item
+        android:id="@+id/bus"
+        android:title="Ônibus"
+        android:icon="@drawable/bus_635705"/>
+
+</menu>

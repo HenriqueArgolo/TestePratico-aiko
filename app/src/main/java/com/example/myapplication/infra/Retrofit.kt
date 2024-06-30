@@ -5,8 +5,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Retrofit{
-   private val logginIntercetor = HttpLoggingInterceptor()
+class Retrofit {
+
+    private val logginIntercetor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
     private val client = OkHttpClient.Builder()
         .addInterceptor(logginIntercetor)
         .build()

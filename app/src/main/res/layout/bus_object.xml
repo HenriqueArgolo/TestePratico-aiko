@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="7dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/black"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/busicon"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="6dp"/>
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
+
+           <TextView
+               android:id="@+id/bus_code_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="1231-ASFD"
+               android:textStyle="bold"
+               android:textColor="@color/white"
+               android:textSize="16sp"
+               android:layout_marginTop="15dp"/>
+
+           <TextView
+               android:id="@+id/destiny"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="TERM. PARELHEIROS"
+               android:textSize="14sp"
+               android:textColor="#AEABAB"/>
+
+           <TextView
+               android:id="@+id/bus_prefix"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="prefixo: 23422"
+               android:textStyle="bold"
+               android:textColor="@color/white"/>
+       </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:padding="6dp"
+                android:backgroundTint="#4CAF50"
+                android:background="@drawable/rounded_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Chega às:"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/arrive_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="6 minutos"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

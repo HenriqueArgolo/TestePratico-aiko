@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black400"
     tools:context=".view.LineFragment">
 
     <LinearLayout
@@ -14,11 +15,13 @@
         <EditText
             android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/rounded_background"
             android:padding="11dp"
             android:hint="Pesquisar linha"
-            android:backgroundTint="#D8D3D3"/>
+            android:backgroundTint="#FFFFFF"/>
 
         <Button
             android:layout_width="wrap_content"

@@ -11,7 +11,7 @@ import com.example.myapplication.model.BusLineVehicle
 
 class BusAdapter(
     private val context: Context,
-    private var busVehicle: List<BusLineVehicle>?
+    private var busVehicle: MutableList<BusLineVehicle> = mutableListOf()
 ) : RecyclerView.Adapter<BusAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: BusObjectBinding) :
@@ -26,26 +26,30 @@ class BusAdapter(
         }
 
 
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = BusObjectBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
+    }
+
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val vehicle = busVehicle[position]
+            holder.bind(vehicle)
+
 
     }
 
-override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val inflater = LayoutInflater.from(parent.context)
-    val binding = BusObjectBinding.inflate(inflater, parent, false)
-    return ViewHolder(binding)
-}
-
-
-override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val vehicle = busVehicle?.get(position)
-    if (vehicle != null) {
-        holder.bind(vehicle)
+    override fun getItemCount(): Int {
+        return busVehicle.size
     }
 
-}
-
-override fun getItemCount(): Int {
-    return busVehicle?.size ?:0
-}
+    fun setData(newList: List<BusLineVehicle>) {
+        busVehicle.clear()
+        busVehicle.addAll(newList)
+        notifyDataSetChanged()
+    }
 
 }

@@ -8,11 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.BusAdapter
 import com.example.myapplication.databinding.FragmentMapBinding
+import com.example.myapplication.model.BusLine
 import com.example.myapplication.model.BusLineVehicle
 import com.example.myapplication.model.BusStop
 import com.example.myapplication.viewModel.MapViewModel
@@ -33,8 +36,9 @@ import kotlinx.coroutines.launch
 class MapFragment : Fragment() {
     private lateinit var binding: FragmentMapBinding
     private lateinit var mMap: GoogleMap
+    private val  currentStopCode = ""
     private lateinit var icon: BitmapDescriptor
-    private var busLineVehicle: List<BusLineVehicle> = emptyList()
+    private var busLineVehicle: MutableList<BusLineVehicle> = mutableListOf()
     private lateinit var busAdapter: BusAdapter
     private var busStopList: List<BusStop> = emptyList()
     private val viewModel: MapViewModel by viewModels()
@@ -48,13 +52,21 @@ class MapFragment : Fragment() {
     ): View {
         binding = FragmentMapBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configBottomSheet() // Configure the bottom sheet
-        setUpMap() // Set up the Google Map
+        busAdapter = BusAdapter(requireContext(), mutableListOf())
+        configBottomSheet()
+        setUpMap()
+        viewModel.listOfBus.observe(viewLifecycleOwner, Observer { busList ->
+            busAdapter.setData(busList)
+            busLineVehicle = busList
+        })
+
     }
+
 
     // Sets up the Google Map
     private fun setUpMap() {
@@ -70,17 +82,6 @@ class MapFragment : Fragment() {
         }
     }
 
-    // Fetches bus vehicle arrival times and updates the adapter
-    private fun fetchBusVehicles(busStopCode: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val result = viewModel.getBusArriveTime(busStopCode)
-            result.let {
-                busLineVehicle = it
-            }
-
-        }
-
-    }
 
     // Initializes the map with a default marker and camera position
     private fun initializeMap() {
@@ -93,11 +94,16 @@ class MapFragment : Fragment() {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 15f))
     }
 
-    // Adds bus stop markers to the map
-    private fun findBusStop(busStopList: List<BusStop>) {
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.bus_stop2)
+    private fun imageToBitMap(image: Int): BitmapDescriptor{
+        val bitmap = BitmapFactory.decodeResource(resources, image)
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
         icon = BitmapDescriptorFactory.fromBitmap(scaledBitmap)
+        return icon
+    }
+
+    // Adds bus stop markers to the map
+    private fun findBusStop(busStopList: List<BusStop>) {
+        icon = imageToBitMap(R.drawable.bus_stop2)
 
         busStopList.forEach { busStop ->
             val marker = mMap.addMarker(
@@ -111,87 +117,91 @@ class MapFragment : Fragment() {
         }
         mMap.setOnMarkerClickListener { clickedMarker ->
             val clickedBusStop = clickedMarker.getBusStop()
+
             if (clickedBusStop != null) {
-                fetchBusVehicles(clickedBusStop.stopCode)
                 binding.busStopName.text = clickedBusStop.stopName
                 binding.busStopAdress.text = clickedBusStop.stopLocation
                 binding.optionsContainer.visibility = View.VISIBLE
-                configclicks()
-                showBusinTheMap()
+                configRv()
+                configclicks(clickedBusStop)
             }
             true
         }
     }
 
 
-        // Configures the RecyclerView for displaying bus data
-        private fun configRv() {
-            busAdapter = BusAdapter(requireContext(), busLineVehicle)
-            binding.rv.apply {
-                adapter = busAdapter
-                layoutManager = LinearLayoutManager(requireContext())
-            }
-        }
-
-        // Fetches bus stop data and updates the map with markers
-        private fun fetchBusStop() {
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    busStopList = viewModel.getBusStop()
-                    activity?.runOnUiThread {
-                        findBusStop(busStopList)
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-
-        // Adds a polyline to the map representing a bus route
-        private fun showBusinTheMap() {
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.bus2)
-            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
-            icon = BitmapDescriptorFactory.fromBitmap(scaledBitmap)
-
-           busLineVehicle.forEach { bl ->
-               val marker = mMap.addMarker(
-                   MarkerOptions()
-                       .position(LatLng(bl.vehicle.lat, bl.vehicle.long))
-                       .title("${bl.vehicle.active}")
-                       .icon(icon)
-               )
-           }
-
-        }
-
-        // Configures click listeners for buttons in the bottom sheet
-        private fun configclicks() {
-            binding.busTime.setOnClickListener {
-                configRv()
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
-            binding.linesRoute.setOnClickListener {
-
-            }
-            binding.favoriteBusStop.setOnClickListener {
-
-            }
-        }
-
-        // Configures the bottom sheet behavior
-        private fun configBottomSheet() {
-            bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomsheet)
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            bottomSheetBehavior.peekHeight = 0
-        }
-
-        // Sets a bus stop as the tag of a marker
-        private fun Marker.setBusStop(busStop: BusStop) {
-            tag = busStop
-        }
-
-        // Gets the bus stop from the tag of a marker
-        private fun Marker.getBusStop(): BusStop? {
-            return tag as? BusStop
+    // Configures the RecyclerView for displaying bus data
+    private fun configRv() {
+        binding.rv.apply {
+            adapter = busAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
+
+    // Fetches bus stop data and updates the map with markers
+    private fun fetchBusStop() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                busStopList = viewModel.getBusStop()
+                activity?.runOnUiThread {
+                    findBusStop(busStopList)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    // Adds a polyline to the map representing a bus route
+    private fun showBusinTheMap() {
+        val icon = imageToBitMap(R.drawable.greenbus)
+        busLineVehicle.forEach { bl ->
+            val marker = mMap.addMarker(
+                MarkerOptions()
+                    .position(LatLng(bl.vehicle.lat, bl.vehicle.long))
+                    .title(bl.vehicle.busPrefix)
+                    .icon(icon)
+            )
+        }
+    }
+    // Configures click listeners for buttons in the bottom sheet
+    private fun configclicks(code: BusStop) {
+        binding.busTime.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.fetchBusArriveTime(code.stopCode)
+            }
+            configRv()
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            binding.fab.visibility = View.VISIBLE
+        }
+        binding.linesRoute.setOnClickListener {
+
+        }
+        binding.favoriteBusStop.setOnClickListener {
+
+        }
+        binding.fab.setOnClickListener{
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.fetchBusArriveTime(code.stopCode)
+            }
+            showBusinTheMap()
+        }
+    }
+
+    // Configures the bottom sheet behavior
+    private fun configBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomsheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetBehavior.peekHeight = 0
+    }
+
+    // Sets a bus stop as the tag of a marker
+    private fun Marker.setBusStop(busStop: BusStop) {
+        tag = busStop
+    }
+
+    // Gets the bus stop from the tag of a marker
+    private fun Marker.getBusStop(): BusStop? {
+        return tag as? BusStop
+    }
+}

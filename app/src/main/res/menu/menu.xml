@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/busStop"
-        android:icon="@drawable/bus"
+        android:icon="@drawable/busstation"
         android:title="Paradas" />
     <item
         android:id="@+id/lines"

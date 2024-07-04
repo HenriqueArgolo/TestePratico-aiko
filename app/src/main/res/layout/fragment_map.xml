@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <fragment
@@ -15,18 +15,60 @@
         tools:context=".view.MapFragment" />
 
 
+    <LinearLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <EditText
+            android:id="@+id/search_input"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="#FFFFFF"
+            android:hint="Pesquisar linha"
+            android:padding="11dp" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_background"
+            android:text="Buscar" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="230dp"
+        android:contentDescription="Atualizar posição"
+        android:src="@drawable/search" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="30dp"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="160dp"
-        android:visibility="gone"
+        android:contentDescription="Atualizar posição"
         android:src="@drawable/bus"
-        android:contentDescription="Atualizar posição" />
-
+        android:visibility="gone" />
 
 
     <FrameLayout
@@ -50,8 +92,8 @@
                 android:layout_height="wrap_content"
                 android:background="#302B2B"
                 android:gravity="start"
-                android:paddingTop="5dp"
                 android:paddingStart="10dp"
+                android:paddingTop="5dp"
                 android:text="ANA CAROLINA B/C"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -68,8 +110,7 @@
                 android:paddingBottom="6dp"
                 android:text="R CAROLINA REIMBERG/ R HENRIQUE HESSEL"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,17 +127,17 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
                         android:src="@drawable/busicon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
+                        android:text="Chegada"
                         android:textSize="16sp"
-                        android:text="Chegada" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -110,17 +151,17 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
                         android:src="@drawable/route" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
+                        android:text="Linhas"
                         android:textSize="16sp"
-                        android:text="Linhas" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -134,17 +175,17 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
                         android:src="@drawable/star" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
+                        android:text="Favoritar"
                         android:textSize="16sp"
-                        android:text="Favoritar" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -158,18 +199,28 @@
         android:id="@+id/bottomsheet"
         android:layout_width="match_parent"
         android:layout_height="650dp"
+        android:background="@drawable/top_rounded_board"
         android:backgroundTint="@color/black400"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:background="@drawable/top_rounded_board">
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/bus_object"
-        android:paddingBottom="100dp"
-        android:paddingTop="15dp"
-        android:layout_marginBottom="10dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="100dp"
+            tools:listitem="@layout/bus_object" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="15dp"
+            android:visibility="gone"
+            android:paddingBottom="100dp"
+            tools:listitem="@layout/bus_object" />
 
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.infra.Retrofit
+import com.example.myapplication.infra.Token
 import com.example.myapplication.model.BusLineVehicle
 import com.example.myapplication.model.BusStop
 import com.example.myapplication.model.BusStopSearch
@@ -17,7 +18,7 @@ class MapViewModel : ViewModel() {
     private val _listOfBus = MutableLiveData<MutableList<BusLineVehicle>>()
     val listOfBus: LiveData<MutableList<BusLineVehicle>> get() =_listOfBus
 
-    private val AUTH_TOKEN = "3600262b8523ce1d9af06c00ccb91257d5b223124f748aee5fc80409107baf92"
+    private val AUTH_TOKEN =Token.value.token
 
 
     init {

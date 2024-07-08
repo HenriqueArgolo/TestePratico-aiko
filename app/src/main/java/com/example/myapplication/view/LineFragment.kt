@@ -6,10 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import com.example.myapplication.R
+import com.example.myapplication.adapter.LineAdapter
+import com.example.myapplication.databinding.FragmentLineBinding
 import com.example.myapplication.viewModel.LineViewModel
 
 class LineFragment : Fragment() {
+    private lateinit var binding: FragmentLineBinding
+    private lateinit var adapter: LineAdapter
 
     companion object {
         fun newInstance() = LineFragment()
@@ -27,6 +32,11 @@ class LineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_line, container, false)
+        binding = FragmentLineBinding.inflate(inflater, container, false)
+        return  binding.root
+    }
+
+    private fun configRv(){
+        adapter = LineAdapter(requireContext())
     }
 }

@@ -5,23 +5,42 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.LinesObjectBinding
+import com.example.myapplication.model.BusLine
 import com.example.myapplication.model.BusLineVehicle
 
 
+
+sealed class ListItem {
+    data class BusLinevehicle(val vehicle: BusLineVehicle) : ListItem()
+    data class Line(val line: BusLine) : ListItem()
+}
 class LineAdapter(
     private val context: Context,
-    private var busVehicle: MutableList<BusLineVehicle> = mutableListOf()
+    private var busVehicle: MutableList<ListItem> = mutableListOf()
 ) : RecyclerView.Adapter<LineAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: LinesObjectBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(busVehicle: BusLineVehicle) {
-            binding.busCodeName.text = busVehicle.line.lineSign
-            binding.destiny.text = busVehicle.line.destination
-            binding.destiny.text = String.format("Destino: ${busVehicle.line.destination}")
-            binding.origin.text = String.format("Origem: ${busVehicle.line.origin}")
-            binding.quantity.text = String.format("Quantidade: ${busVehicle.line.vehicleCount} veiculos")
+        fun bind(listItem: ListItem) {
+            when(listItem){
+                is ListItem.BusLinevehicle->{
+                    binding.busCodeName.text = listItem.vehicle.line.lineSign
+                    binding.destiny.text = listItem.vehicle.line.destination
+                    binding.destiny.text = String.format("Destino: ${listItem.vehicle.line.destination}")
+                    binding.origin.text = String.format("Origem: ${listItem.vehicle.line.origin}")
+                    binding.quantity.text = String.format("Quantidade: ${listItem.vehicle.line.vehicleCount} veiculos")
+                }
+                is ListItem.Line ->{
+                    binding.busCodeName.text = listItem.line.lineSign
+                    binding.destiny.text = listItem.line.destination
+                    binding.destiny.text = String.format("Destino: ${listItem.line.destination}")
+                    binding.origin.text = String.format("Origem: ${listItem.line.origin}")
+                    binding.quantity.text = String.format("Quantidade: ${listItem.line.vehicleCount} veiculos")
+                }
+
+                is ListItem.Line -> TODO()
+            }
         }
 
     }
@@ -41,7 +60,7 @@ class LineAdapter(
         return busVehicle.size
     }
 
-    fun setData(newList: List<BusLineVehicle>) {
+    fun setData(newList: List<ListItem>) {
         busVehicle.clear()
         busVehicle.addAll(newList)
         notifyDataSetChanged()

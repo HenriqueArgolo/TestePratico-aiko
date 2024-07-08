@@ -3,34 +3,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black400"
+    android:background="#E4E3E3"
     tools:context=".view.LineFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-        <EditText
-            android:layout_width="240dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/rounded_background"
-            android:padding="11dp"
-            android:hint="Pesquisar linha"
-            android:backgroundTint="#FFFFFF"/>
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/rounded_background"
+                android:padding="11dp"
+                android:hint="Pesquisar linha"
+                android:backgroundTint="#B5B0B0"/>
+
+            <Button
+                android:id="@+id/show_on_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_background"
+                android:text="@string/buscar"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_background"
-            android:text="Buscar"/>
-
-
+            android:visibility="gone"
+            tools:listitem="@layout/lines_object" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/routes"
+            />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="@string/busque_por_codigo_da_linha_ponto_de_partida_ou_ponto_de_partida_e_destino_ex_partida_destino"/>
+
+    </LinearLayout>
 </FrameLayout>

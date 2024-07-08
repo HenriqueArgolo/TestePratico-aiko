@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.adapter.BusAdapter
 import com.example.myapplication.adapter.LineAdapter
+import com.example.myapplication.adapter.ListItem
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.myapplication.model.BusLineVehicle
 import com.example.myapplication.model.BusStop
@@ -74,8 +75,9 @@ class MapFragment : Fragment() {
         // atualizo os dados do recyclerview
         viewModel.listOfBus.observe(viewLifecycleOwner, Observer { busList ->
             busAdapter.setData(busList)
-            val lineList =  busList.distinctBy {  it.line.lineSign  }
-            lineAdapter.setData(lineList )
+            val filterLine =  busList.distinctBy {  it.line.lineSign  }
+            val lineList = filterLine.map { ListItem.BusLinevehicle(it) }
+            lineAdapter.setData(lineList)
             busLineVehicle = busList
         })
 

@@ -4,4 +4,7 @@
     <string name="Mapa" />
     <string name="Linhas" />
     <string name="ônibus" />
+    <string name="ver_no_mapa">Ver no mapa</string>
+    <string name="buscar">Buscar</string>
+    <string name="busque_por_codigo_da_linha_ponto_de_partida_ou_ponto_de_partida_e_destino_ex_partida_destino">Busque por codigo da linha, ponto de partida ou ponto de partida e destino (ex: partida, destino)</string>
 </resources>

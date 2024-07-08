@@ -75,14 +75,10 @@ class MapFragment : Fragment() {
         // atualizo os dados do recyclerview
         viewModel.listOfBus.observe(viewLifecycleOwner, Observer { busList ->
             busAdapter.setData(busList)
-<<<<<<< HEAD
+
             val filterLine =  busList.distinctBy {  it.line.lineSign  }
             val lineList = filterLine.map { ListItem.BusLinevehicle(it) }
             lineAdapter.setData(lineList)
-=======
-            val lineList=  busList.distinctBy {  it.line.lineSign  }
-            lineAdapter.setData(lineList )
->>>>>>> e0e77400ce07b8539860bb8ad25057658b671c62
             busLineVehicle = busList
         })
 

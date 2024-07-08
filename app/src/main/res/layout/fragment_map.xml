@@ -33,7 +33,7 @@
             android:layout_marginBottom="30dp"
             android:background="@drawable/rounded_background"
             android:backgroundTint="#FFFFFF"
-            android:hint="Pesquisar linha"
+            android:hint="Nome ou endereço"
             android:padding="11dp" />
 
         <Button

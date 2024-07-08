@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.lines -> {
                     val line = LineFragment()
-                    changeFragment(line)
                     true
                 }
 
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.bus -> {
                     val bus = BusFragment()
-                    changeFragment(bus)
                     true
                 }
 

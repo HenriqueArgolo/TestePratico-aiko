@@ -75,9 +75,14 @@ class MapFragment : Fragment() {
         // atualizo os dados do recyclerview
         viewModel.listOfBus.observe(viewLifecycleOwner, Observer { busList ->
             busAdapter.setData(busList)
+<<<<<<< HEAD
             val filterLine =  busList.distinctBy {  it.line.lineSign  }
             val lineList = filterLine.map { ListItem.BusLinevehicle(it) }
             lineAdapter.setData(lineList)
+=======
+            val lineList=  busList.distinctBy {  it.line.lineSign  }
+            lineAdapter.setData(lineList )
+>>>>>>> e0e77400ce07b8539860bb8ad25057658b671c62
             busLineVehicle = busList
         })
 
@@ -122,22 +127,6 @@ class MapFragment : Fragment() {
         }
     }
 
-    // Obtém a latitude e longitude a partir de um endereço
-    private fun getLatLngFromAddress(context: Context, address: String): LatLng? {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        return try {
-            val addressList = geocoder.getFromLocationName(address, 1)
-            if (addressList.isNullOrEmpty()) {
-                null
-            } else {
-                val location = addressList[0]
-                LatLng(location.latitude, location.longitude)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
 
     // Inicializa o mapa com um marcador padrão e posição da câmera
     private fun initializeMap() {

@@ -27,16 +27,15 @@ class LineAdapter(
                     binding.destiny.text = String.format("Destino: ${listItem.vehicle.line.destination}")
                     binding.origin.text = String.format("Origem: ${listItem.vehicle.line.origin}")
                     binding.quantity.text = String.format("Quantidade: ${listItem.vehicle.line.vehicleCount} veiculos")
+
                 }
                 is ListItem.Line ->{
-                    binding.busCodeName.text = listItem.line.lineSign
-                    binding.destiny.text = listItem.line.destination
-                    binding.destiny.text = String.format("Destino: ${listItem.line.destination}")
-                    binding.origin.text = String.format("Origem: ${listItem.line.origin}")
-                    binding.quantity.text = String.format("Quantidade: ${listItem.line.vehicleCount} veiculos")
-                }
+                    binding.busCodeName.text = String.format("Codigo:${listItem.line.lineCode}")
+                    binding.destiny.text = String.format("Destino: ${listItem.line.destinationTowardsPrimary}")
+                    binding.origin.text = String.format("Origem: ${listItem.line.destinationTowardsSecondary}")
+                    binding.quantity.text = String.format("Letreiro: ${listItem.line.lineNumberPrefix}-${listItem.line.lineNumberSuffix}")
 
-                is ListItem.Line -> TODO()
+                }
             }
         }
 

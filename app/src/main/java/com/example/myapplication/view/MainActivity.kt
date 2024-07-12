@@ -5,16 +5,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.infra.Retrofit
+import com.example.myapplication.infra.Token
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val mapFragment = MapFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            Retrofit().apiService.auth(Token.value.TOKEN)
+        }
+
         changeFragment(mapFragment)
         navOptions()
+
 
     }
 
@@ -25,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.lines -> {
                     val line = LineFragment()
+                    changeFragment(line)
                     true
                 }
 

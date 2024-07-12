@@ -1,10 +1,8 @@
 package com.example.myapplication.view
 
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.location.Geocoder
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,7 +34,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Locale
+
 
 
 @Suppress("DEPRECATION")
@@ -168,6 +166,7 @@ class MapFragment : Fragment() {
             marker?.setBusStop(busStop)
         }
     }
+
 
     // Configura o RecyclerView para exibir dados de ônibus
     private fun configRv() {

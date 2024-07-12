@@ -6,13 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.R
 import com.example.myapplication.adapter.LineAdapter
 import com.example.myapplication.adapter.ListItem
 import com.example.myapplication.databinding.FragmentLineBinding
@@ -22,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 
 class LineFragment : Fragment() {
     private lateinit var binding: FragmentLineBinding
-    private lateinit var adapter: LineAdapter
+    private lateinit var lineAdapter: LineAdapter
 
     companion object {
         fun newInstance() = LineFragment()
@@ -47,11 +42,11 @@ class LineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = LineAdapter(requireContext(), mutableListOf())
+        lineAdapter = LineAdapter(requireContext(), mutableListOf())
         configRv()
         viewModel.lineList.observe(viewLifecycleOwner, Observer { lines ->
             val linesMutable = lines.map { ListItem.Line(it) }
-            adapter.setData(linesMutable)
+            lineAdapter.setData(linesMutable)
         })
 
         searchLine()
@@ -59,7 +54,7 @@ class LineFragment : Fragment() {
 
     private fun configRv(){
         binding.rv.apply {
-            adapter = adapter
+            adapter = lineAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
@@ -70,6 +65,7 @@ class LineFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).apply {
                 viewModel.fetchBusLine(termoBusca)
             }
+            configRv()
             binding.informationContainer.visibility = View.GONE
             binding.rv.visibility = View.VISIBLE
         }

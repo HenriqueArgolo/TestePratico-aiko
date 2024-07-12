@@ -25,6 +25,7 @@ class BusAdapter(
             binding.destiny.text = busVehicle.line.destination
             binding.busPrefix.text = String.format("Prefixo:${busVehicle.vehicle.busPrefix}")
             binding.arriveTime.text = busVehicle.vehicle.arriveTime
+
         }
 
     }

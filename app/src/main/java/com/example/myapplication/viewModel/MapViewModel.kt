@@ -18,7 +18,7 @@ class MapViewModel : ViewModel() {
     private val _listOfBus = MutableLiveData<MutableList<BusLineVehicle>>()
     val listOfBus: LiveData<MutableList<BusLineVehicle>> get() =_listOfBus
 
-    private val AUTH_TOKEN =Token.value.token
+    private val AUTH_TOKEN =Token.value.TOKEN
 
 
     init {
@@ -29,7 +29,7 @@ class MapViewModel : ViewModel() {
         val apiService = Retrofit().apiService
         return withContext(Dispatchers.IO) {
             try {
-                val response = apiService.getAllBusStop("Bearer $AUTH_TOKEN")
+                val response = apiService.getAllBusStop()
                 response.map {
                     it
                 }
@@ -56,20 +56,6 @@ class MapViewModel : ViewModel() {
         }
     }
 
-    // Busca códigos de linhas de ônibus
-    private suspend fun getLines(): List<String> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = Retrofit().apiService.searchBusLine("Bearer $AUTH_TOKEN")
-                response.lines.map {
-                    it.lineCode
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emptyList()
-            }
-        }
-    }
 
     // Busca horários de chegada de ônibus para uma parada específica
     suspend fun fetchBusArriveTime(stopCode: String) {

@@ -1,3 +1,33 @@
+
+Monitoramento de Ônibus SP
+Este aplicativo Android utiliza a API Olho Vivo para fornecer informações em tempo real sobre a frota de ônibus de São Paulo, exibindo as rotas e localizações dos ônibus no mapa.
+
+Funcionalidades
+Exibição de todas as paradas de ônibus no mapa.
+Busca por paradas de ônibus pelo nome ou endereço.
+Visualização das rotas de ônibus e suas localizações atuais.
+Informações detalhadas sobre as linhas de ônibus, incluindo prefixo, horário de chegada e status.
+Atualizações em tempo real das localizações dos ônibus.
+Tecnologias Utilizadas
+Linguagem de Programação: Kotlin
+Bibliotecas:
+Gson (para serialização/deserialização de JSON)
+Google Play Services Maps (para exibição do mapa)
+AndroidX (core-ktx, appcompat, material, activity, constraintlayout, lifecycle-livedata-ktx, lifecycle-viewmodel-ktx, fragment-ktx, legacy-support-v4)
+Retrofit e OkHttp (para comunicação com a API Olho Vivo)
+Arquitetura: MVVM (Model-View-ViewModel)
+Configuração do Projeto
+Pré-requisitos
+Android Studio instalado
+Conta na SPTrans para obter a chave de API Olho Vivo
+
+
+
+
+
+
+
+
 ![Captura de tela 2024-07-04 094947](https://github.com/HenriqueArgolo/TestePratico-aiko/assets/79125655/329e6de7-f5cb-4264-a168-9d074c8a7915)
 ![Captura de tela 2024-07-04 095008](https://github.com/HenriqueArgolo/TestePratico-aiko/assets/79125655/eef38352-163b-482a-a0f1-f4fd1e4702ac)
 ![image](https://github.com/HenriqueArgolo/TestePratico-aiko/assets/79125655/9321cd05-0f0f-4ff1-b62e-522a33de65e3)
